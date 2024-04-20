@@ -1,0 +1,11 @@
+Connect with TLS (2021):
+	cloud.mongodb: 
+		DB access -> new user
+		Databases -> <clusterName> -> PRIMARY -> copy String
+	
+	
+	robo3t: 
+		connect (cmd+N) -> create -> Direct Conn -> paste String 
+		to Address and delete ':27017' from String -> Auth -> Perform ->
+		username + pwd -> TLS -> Use TLS -> Auth methon 'Self-signed'
+	

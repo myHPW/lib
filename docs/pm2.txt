@@ -1,0 +1,10 @@
+npm i pm2 -g
+pm2 start --name=[name] npm -- start
+ pm2 start --name=expressServer npm -- start
+pm2 list
+pm2 status 
+pm2 startup
+pm2 save
+pm2 stop [name]
+htop - диспетчер задач
+sudo reboot -h now

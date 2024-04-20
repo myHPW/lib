@@ -1,0 +1,13 @@
+# add ssh-key (чтобы не запрашивался каждый раз пароль):
+	/usr/bin/ssh-add --apple-use-keychain
+
+# enable root-user by normal user:	
+	sudo passwd root
+	su -
+	disable: sudo passwd -dl root
+
+# ngrok:
+	запустить (нужно находиться в папке с утилитой ngrok): ./ngrok http 3000
+
+
+# end #

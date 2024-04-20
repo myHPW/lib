@@ -1,0 +1,20 @@
+To start mysql:
+  brew services start mysql
+Or, if you don't want/need a background service you can just run:
+  /opt/homebrew/opt/mysql/bin/mysqld_safe --datadir=/opt/homebrew/var/mysql
+
+если sql ругается на Ноду из-за авторизации:
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+
+insert:
+INSERT INTO `users`(`name`, `email`) VALUES ('userName','userEmail'), ('userName2','userEmail2')
+
+delete:
+DELETE FROM `users` WHERE `users`.`id` = 1
+
+update:
+UPDATE `users` SET `name`='newName',`email`='newEmail' WHERE `id` = 1
+
+select:
+SELECT `users`.`id`, `users`.`name` FROM `users`

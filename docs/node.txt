@@ -1,0 +1,4 @@
+# Настройка режима поведения при ошибках без обработчика (for default: =warn)
+	--unhandled-rejections=mode
+	Или подписаться на событие: 
+		process.on("unhandledRejection", (e) => { console.log(e.message) });

@@ -1,0 +1,95 @@
+# to clone all repos at public org: 
+	curl -s "https://api.github.com/orgs/ACC_OR_ORG_NAME/repos?per_page=100" | jq -r ".[].clone_url" | xargs -L1 git clone
+
+# push to another branch:
+	git push --set-upstream origin foolstuck
+
+# merge if conflicts:
+	(if need to otkatitsa) git reset --hard <commit SHA>
+	git push --force
+	git merge mai
+
+add password of ssh to Keychain:
+	some command (for example, git push)
+	ssh-add -K
+
+*** reset user login data ***
+Copy this into your terminal to unset existing GitHub login credentials:
+
+git config --global --unset credential.helper
+git credential-osxkeychain erase
+host=github.com
+protocol=https
+
+Step 2
+Open a new terminal window, and set the name and email for commits:
+git config --global user.name "Your Name"
+git config --global user.email you@example.com
+
+Step 3
+Run a git push or git clone a private repository so GitHub prompts you to enter your username and password.
+For the username, simply enter your email.
+For the password paste in your token (i.e. copy the token from GitHub website where you created it and paste it in).
+*** reset user login data ***
+
+
+
+
+
+
+
+
+
+
+*** contributing with fork ***
+Сначала идешь в гитхаб-битбакет и ищешь там в нужном репозитории кнопку Fork. Обычно она недалеко от кнопки clone. Жмешь на fork и для тебя создается проект. Если исходный был company/adminka.git, то твой будет примерно vasya/adminka.git. Ну или примерно так. Дальше клонируешь его как обычно
+
+git clone git@bitbucket.org:vasya/adminka.git 
+Естественно, свой форк клонируешь, а не оригинальный. Затем там создаешь привычно ветку и пушишь ее.
+
+git checkout -b blog/new-field
+...
+git push origin blog/new-field
+Заходишь в гитхаб-битбакет исходного репозитория, жмешь "Создать мердж-реквест", выбираешь свою ветку, она будет называться примерно vasya/adminka/blog/new-field, и ждешь, пока мердж-реквест примут.
+
+Пока все ровно так, как ты привык, ничего нового. Мердж-реквест принимают и все хорошо.
+
+Через месяц тебе нужно сделать еще одну задачу. Ты привычно подтягиваешь мастер и настораживаешься
+
+git pull --rebase origin master 
+From bitbucket.org:vasya/adminka
+Current branch master is up to date.
+За месяц нет новых коммитов в мастере? Да не верю. Идешь в репозиторий админки, смотришь, там до фига коммитов, чуть не каждый день в мастер пушат. В чем дело?
+
+Присматриваешься, откуда ты пулишься и видишь, что это vasya/adminka. Это твой репозиторий, твой форк. Конечно, ты его месяц не трогал и он ничего не знает о новых коммитах в исходном проекте. Их нужно подтянуть и только тогда создавать новую ветку. Можно сделать это так
+
+git pull --rebase git@bitbucket.org:company/adminka.git master 
+То есть вместо origin указываешь адрес нужного репозитория. И вот теперь-то подтянется мастер именно исходного проекта, а не твоего. А еще лучше сделать так, чтобы не набивать каждый раз длинный адрес
+
+git remote add upstream git@bitbucket.org:company/adminka.git
+Теперь у тебя есть origin - твой репозиторий, твой форк, а есть upstream - оригинальный репозиторий. И ты можешь пулиться, указывая сразу upstream
+
+git pull --rebase upstream master
+Вот теперь твой мастер актуален, можешь создавать ветку и пушить в репозиторий. Пушить уже в origin, то есть свой, потому что в upstream, исходный, тебе пушить никто не даст. То есть еще раз, пулишь мастер так
+
+git pull --rebase upstream master
+а пушишь свою ветку так
+
+git push origin branch-name
+По сути это все, что нужно знать о работе с форками. После этого идешь создавать мердж-реквест, твоя ветка уже видна в исходном репозитории. Если ты работал над веткой, а за это время в мастер накидали еще коммитов, то перед отправкой мердж-реквеста стоит отребейзиться от мастера
+
+git checkout master 
+git pull --rebase upstream master
+git checkout branch-name
+git rebase master
+git push -f origin branch-name
+Тут можешь делать, как хочешь, твой форк, твои правила. Можешь пушить с форсом, как у меня в примере. Если не хочешь с форсом, то можешь создать отдельную ветку и положить коммит в нее. Как угодно. Главное, чтобы твои коммиты лежали поверх свежих коммитов из мастера. Тогда никто не будет возникать при рассмотрении мердж-реквеста, а ты будешь уверен, что у тебя самые свежие обновления.
+
+*** s
+от ветки 123 делатешь ветку 123_стейдж.
+в ветку 123_стейдж мерджишь ветку стейдж, резовлишь конфликты и коммитишь резовл конфликтов в ветку 123_стейдж.
+ветку 123 мерджишь в прод
+ветку 123_стейдж - в стейдж
+таким образом в ветке прод и стейдж будет одинаковый хеш коммита с оригинальной таски 123, плюс в ветке стейдж будет коммит с резолвом конфликтов относительно коммита таски 123.
+Это поможет безболезененно вмердить потом стейдж в прод
+*** e
